@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>YouTube Live Sub Count</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    background:white;
+}
+
+.card{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+img{
+    width:110px;
+    height:110px;
+    border-radius:12px;
+}
+
+.name{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.subs{
+    font-size:72px;
+    font-weight:700;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+    <img id="pfp">
+    <div>
+        <div class="name" id="name">Laden...</div>
+        <div class="subs" id="subs">...</div>
+    </div>
+</div>
+
+<script>
+const channelId="https://youtube.com/@aukje.vdwelle?si=tXGtFfP7Ukg1D3t7";
+
+async function load(){
+
+const r=await fetch(`https://mixerno.space/api/youtube-channel-counter/user/${channelId}`);
+const data=await r.json();
+
+document.getElementById("pfp").src=data.user[0].avatar;
+document.getElementById("name").innerText=data.user[0].name;
+document.getElementById("subs").innerText=Number(data.counts[0].count).toLocaleString();
+
+}
+
+load();
+setInterval(load,5000);
+</script>
+
+</body>
+</html>
